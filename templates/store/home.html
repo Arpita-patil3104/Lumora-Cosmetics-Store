@@ -1,0 +1,1349 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LUMORA | Beauty That Feels Like You</title>
+
+    <meta
+        name="description"
+        content="Discover makeup, skincare, haircare, fragrance and beauty essentials at LUMORA."
+    >
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP OFFER BAR
+     ========================================================= -->
+
+<div class="top-bar">
+
+    ✨ LUMORA GLOW DAYS
+
+    <span>
+        FREE SHIPPING ABOVE ₹499
+    </span>
+
+    <span>
+        EXTRA 10% OFF — USE CODE GLOW10
+    </span>
+
+</div>
+
+
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            type="button"
+        >
+            ☰
+        </button>
+
+
+        <!-- LOGO -->
+
+        <a
+            href="{% url 'home' %}"
+            class="brand-logo"
+        >
+            LUMORA
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="main-nav">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+
+            <a href="{% url 'product_list' %}">
+                Shop
+            </a>
+
+
+            <div class="nav-dropdown">
+
+                <span>
+                    Categories
+                </span>
+
+
+                <div class="mega-menu">
+
+                    {% for category in categories %}
+
+                        <a
+                            href="{% url 'product_list' %}?category={{ category.slug }}"
+                        >
+                            {{ category.name }}
+                        </a>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <a href="#bestsellers">
+                Bestsellers
+            </a>
+
+
+            <a href="#new-arrivals">
+                New Arrivals
+            </a>
+
+
+            <a
+                href="{% url 'product_list' %}"
+                class="sale-link"
+            >
+                SALE
+            </a>
+
+        </nav>
+
+
+
+        <!-- SEARCH -->
+
+        <form
+            class="header-search"
+            action="{% url 'product_list' %}"
+            method="GET"
+        >
+
+            <span>
+                ⌕
+            </span>
+
+            <input
+                type="search"
+                name="q"
+                placeholder="Search makeup, skincare..."
+                autocomplete="off"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header-actions">
+
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'home' %}"
+                    title="Account"
+                >
+                    ♙
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{% url 'login' %}"
+                    title="Login"
+                >
+                    ♙
+                </a>
+
+            {% endif %}
+
+
+
+            <!-- WISHLIST -->
+
+            <a
+                href="#"
+                title="Wishlist"
+                onclick="alert('Wishlist coming next!'); return false;"
+            >
+                ♡
+            </a>
+
+
+
+            <!-- CART -->
+
+            <a
+                <a href="/cart/" title="Shopping Bag">
+            >
+
+                🛍
+
+                <span class="bag-count">
+                    0
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MOBILE NAVIGATION
+     ========================================================= -->
+
+<div
+    class="mobile-navigation"
+    id="mobileNavigation"
+>
+
+
+    <button
+        id="closeMobileMenu"
+        type="button"
+    >
+        ×
+    </button>
+
+
+    <a href="{% url 'home' %}">
+        Home
+    </a>
+
+
+    <a href="{% url 'product_list' %}">
+        Shop All
+    </a>
+
+
+    {% for category in categories %}
+
+        <a
+            href="{% url 'product_list' %}?category={{ category.slug }}"
+        >
+            {{ category.name }}
+        </a>
+
+    {% endfor %}
+
+
+    <a href="#bestsellers">
+        Bestsellers
+    </a>
+
+
+    <a href="#new-arrivals">
+        New Arrivals
+    </a>
+
+
+    <a href="{% url 'login' %}">
+        My Account
+    </a>
+
+
+    <a href="{% url 'cart' %}">
+        Shopping Bag
+    </a>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <p class="hero-eyebrow">
+            BEAUTY • SKIN • SELF CARE
+        </p>
+
+
+        <h1>
+            Your glow.
+            <br>
+            Your rules.
+        </h1>
+
+
+        <p>
+            Discover beauty essentials designed
+            to make every version of you shine.
+        </p>
+
+
+        <div class="hero-buttons">
+
+
+            <a
+                href="{% url 'product_list' %}"
+                class="primary-button"
+            >
+                Shop Now
+            </a>
+
+
+            <a
+                href="#categories"
+                class="secondary-button"
+            >
+                Explore Beauty
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="hero-art">
+
+        <div class="hero-circle"></div>
+
+
+        <div class="hero-product hero-product-one">
+            ✦
+        </div>
+
+
+        <div class="hero-product hero-product-two">
+            L
+        </div>
+
+
+        <div class="hero-floating-card">
+
+            <strong>
+                GLOW
+            </strong>
+
+            <span>
+                Starts here.
+            </span>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     BENEFITS
+     ========================================================= -->
+
+<section class="benefits">
+
+
+    <div class="benefit">
+
+        <span>
+            🚚
+        </span>
+
+        <div>
+
+            <strong>
+                Free Shipping
+            </strong>
+
+            <small>
+                On orders above ₹499
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <span>
+            ✓
+        </span>
+
+        <div>
+
+            <strong>
+                Genuine Products
+            </strong>
+
+            <small>
+                Beauty you can trust
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <span>
+            ↻
+        </span>
+
+        <div>
+
+            <strong>
+                Easy Returns
+            </strong>
+
+            <small>
+                Simple & hassle-free
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="benefit">
+
+        <span>
+            ♡
+        </span>
+
+        <div>
+
+            <strong>
+                Curated Beauty
+            </strong>
+
+            <small>
+                Made for your routine
+            </small>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     CATEGORIES
+     ========================================================= -->
+
+<section
+    class="section"
+    id="categories"
+>
+
+
+    <div class="section-heading">
+
+
+        <div>
+
+            <p class="eyebrow">
+                SHOP BY CATEGORY
+            </p>
+
+            <h2>
+                Find your beauty ritual
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'product_list' %}">
+            View All →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="category-grid">
+
+
+        {% for category in categories %}
+
+
+            <a
+                href="{% url 'product_list' %}?category={{ category.slug }}"
+                class="category-card"
+            >
+
+
+                <div class="category-art">
+
+
+                    {% if category.image %}
+
+                        <img
+                            src="{{ category.image.url }}"
+                            alt="{{ category.name }}"
+                        >
+
+                    {% else %}
+
+                        <span>
+                            {{ category.name|first }}
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <h3>
+                    {{ category.name }}
+                </h3>
+
+
+                <p>
+                    Explore collection →
+                </p>
+
+
+            </a>
+
+
+        {% empty %}
+
+
+            <p>
+                Categories coming soon.
+            </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FEATURED PRODUCTS
+     ========================================================= -->
+
+<section class="section soft-section">
+
+
+    <div class="section-heading">
+
+
+        <div>
+
+            <p class="eyebrow">
+                LUMORA EDIT
+            </p>
+
+            <h2>
+                Featured beauty
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'product_list' %}">
+            Shop all →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="product-grid">
+
+
+        {% for product in featured_products %}
+
+
+            <article class="product-card">
+
+
+                <a
+                    href="{% url 'product_detail' product.slug %}"
+                    class="product-image"
+                >
+
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+
+                            <span>
+                                LUMORA
+                            </span>
+
+                            <small>
+                                BEAUTY ESSENTIAL
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    {% if product.discount_percentage %}
+
+                        <span class="product-badge">
+                            {{ product.discount_percentage }}% OFF
+                        </span>
+
+                    {% endif %}
+
+
+                </a>
+
+
+
+                <div class="product-info">
+
+
+                    <span class="product-brand">
+                        {{ product.brand|default:"LUMORA" }}
+                    </span>
+
+
+                    <h3>
+
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
+                        >
+                            {{ product.name }}
+                        </a>
+
+                    </h3>
+
+
+
+                    {% if product.rating %}
+
+                        <div class="product-rating">
+
+                            ★ {{ product.rating }}
+
+                            <small>
+                                ({{ product.reviews_count }})
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div class="product-price">
+
+
+                        {% if product.sale_price %}
+
+                            <strong>
+                                ₹{{ product.sale_price }}
+                            </strong>
+
+                            <del>
+                                ₹{{ product.price }}
+                            </del>
+
+                        {% else %}
+
+                            <strong>
+                                ₹{{ product.price }}
+                            </strong>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                        class="home-view-button"
+                    >
+                        View Product
+                    </a>
+
+
+                </div>
+
+
+            </article>
+
+
+        {% empty %}
+
+
+            <div class="empty-home">
+
+                <h3>
+                    Products coming soon ✨
+                </h3>
+
+                <p>
+                    Add products from Django Admin.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     SALE BANNER
+     ========================================================= -->
+
+<section class="sale-banner">
+
+
+    <div>
+
+
+        <p>
+            LIMITED TIME BEAUTY EVENT
+        </p>
+
+
+        <h2>
+            Glow more.
+            <br>
+            Spend less.
+        </h2>
+
+
+        <span>
+            Up to 40% off selected beauty essentials.
+        </span>
+
+
+        <a href="{% url 'product_list' %}">
+            Shop Sale →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="sale-number">
+
+        40%
+
+        <small>
+            OFF
+        </small>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     BESTSELLERS
+     ========================================================= -->
+
+<section
+    class="section"
+    id="bestsellers"
+>
+
+
+    <div class="section-heading">
+
+
+        <div>
+
+            <p class="eyebrow">
+                MOST LOVED
+            </p>
+
+            <h2>
+                Bestsellers
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'product_list' %}">
+            View all →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="product-grid">
+
+
+        {% for product in bestseller_products %}
+
+
+            <article class="product-card">
+
+
+                <a
+                    href="{% url 'product_detail' product.slug %}"
+                    class="product-image"
+                >
+
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+
+                            <span>
+                                LUMORA
+                            </span>
+
+                            <small>
+                                BESTSELLER
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <span class="bestseller-badge">
+                        BESTSELLER
+                    </span>
+
+
+                </a>
+
+
+
+                <div class="product-info">
+
+
+                    <span class="product-brand">
+                        {{ product.brand|default:"LUMORA" }}
+                    </span>
+
+
+                    <h3>
+
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
+                        >
+                            {{ product.name }}
+                        </a>
+
+                    </h3>
+
+
+
+                    <div class="product-rating">
+
+                        ★ {{ product.rating }}
+
+                        <small>
+                            ({{ product.reviews_count }})
+                        </small>
+
+                    </div>
+
+
+
+                    <div class="product-price">
+
+
+                        {% if product.sale_price %}
+
+                            <strong>
+                                ₹{{ product.sale_price }}
+                            </strong>
+
+                            <del>
+                                ₹{{ product.price }}
+                            </del>
+
+                        {% else %}
+
+                            <strong>
+                                ₹{{ product.price }}
+                            </strong>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                        class="home-view-button"
+                    >
+                        View Product
+                    </a>
+
+
+                </div>
+
+
+            </article>
+
+
+        {% empty %}
+
+
+            <p>
+                Bestseller collection coming soon.
+            </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     NEW ARRIVALS
+     ========================================================= -->
+
+<section
+    class="section soft-section"
+    id="new-arrivals"
+>
+
+
+    <div class="section-heading">
+
+
+        <div>
+
+            <p class="eyebrow">
+                JUST IN
+            </p>
+
+            <h2>
+                New arrivals
+            </h2>
+
+        </div>
+
+
+        <a href="{% url 'product_list' %}">
+            Discover →
+        </a>
+
+
+    </div>
+
+
+
+    <div class="product-grid">
+
+
+        {% for product in new_arrivals %}
+
+
+            <article class="product-card">
+
+
+                <a
+                    href="{% url 'product_detail' product.slug %}"
+                    class="product-image"
+                >
+
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <div class="product-placeholder">
+
+                            <span>
+                                LUMORA
+                            </span>
+
+                            <small>
+                                NEW ARRIVAL
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <span class="new-badge">
+                        NEW
+                    </span>
+
+
+                </a>
+
+
+
+                <div class="product-info">
+
+
+                    <span class="product-brand">
+                        {{ product.brand|default:"LUMORA" }}
+                    </span>
+
+
+                    <h3>
+
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
+                        >
+                            {{ product.name }}
+                        </a>
+
+                    </h3>
+
+
+
+                    {% if product.rating %}
+
+                        <div class="product-rating">
+
+                            ★ {{ product.rating }}
+
+                            <small>
+                                ({{ product.reviews_count }})
+                            </small>
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div class="product-price">
+
+
+                        {% if product.sale_price %}
+
+                            <strong>
+                                ₹{{ product.sale_price }}
+                            </strong>
+
+                            <del>
+                                ₹{{ product.price }}
+                            </del>
+
+                        {% else %}
+
+                            <strong>
+                                ₹{{ product.price }}
+                            </strong>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
+                        class="home-view-button"
+                    >
+                        View Product
+                    </a>
+
+
+                </div>
+
+
+            </article>
+
+
+        {% empty %}
+
+
+            <p>
+                New arrivals coming soon.
+            </p>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     NEWSLETTER
+     ========================================================= -->
+
+<section class="newsletter">
+
+
+    <p class="eyebrow">
+        THE LUMORA GLOW CLUB
+    </p>
+
+
+    <h2>
+        Beauty inspiration,
+        straight to your inbox.
+    </h2>
+
+
+    <p>
+        Get new launches, beauty tips and exclusive offers.
+    </p>
+
+
+
+    <form
+        onsubmit="return false;"
+    >
+
+        <input
+            type="email"
+            placeholder="Enter your email address"
+            required
+        >
+
+
+        <button type="submit">
+            Join the Glow Club
+        </button>
+
+    </form>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer class="footer">
+
+
+    <div class="footer-grid">
+
+
+        <!-- BRAND -->
+
+        <div>
+
+            <div class="footer-logo">
+                LUMORA
+            </div>
+
+
+            <p>
+                Beauty that feels like you.
+            </p>
+
+        </div>
+
+
+
+        <!-- SHOP -->
+
+        <div>
+
+            <h4>
+                Shop
+            </h4>
+
+
+            <a href="{% url 'product_list' %}">
+                All Products
+            </a>
+
+
+            {% for category in categories|slice:":5" %}
+
+                <a
+                    href="{% url 'product_list' %}?category={{ category.slug }}"
+                >
+                    {{ category.name }}
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+
+
+        <!-- HELP -->
+
+        <div>
+
+            <h4>
+                Help
+            </h4>
+
+
+            <a href="#">
+                Contact Us
+            </a>
+
+
+            <a href="#">
+                Shipping
+            </a>
+
+
+            <a href="#">
+                Returns
+            </a>
+
+
+            <a href="#">
+                FAQs
+            </a>
+
+        </div>
+
+
+
+        <!-- SOCIAL -->
+
+        <div>
+
+            <h4>
+                Follow LUMORA
+            </h4>
+
+
+            <a href="#">
+                Instagram
+            </a>
+
+
+            <a href="#">
+                Pinterest
+            </a>
+
+
+            <a href="#">
+                YouTube
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © {% now "Y" %} LUMORA
+        </span>
+
+
+        <span>
+            Beauty that feels like you.
+        </span>
+
+    </div>
+
+
+</footer>
+
+
+
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

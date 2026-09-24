@@ -1,0 +1,159 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | LUMORA</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <a
+            href="{% url 'home' %}"
+            class="auth-logo"
+        >
+            LUMORA
+        </a>
+
+
+        <div class="auth-label">
+            JOIN LUMORA
+        </div>
+
+
+        <h1>
+            Create your account
+        </h1>
+
+
+        <p class="auth-subtitle">
+            Create an account and start discovering
+            your new beauty favourites.
+        </p>
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="auth-message">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Choose a username"
+                required
+            >
+
+
+            <label for="email">
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                required
+            >
+
+
+            <label for="confirm_password">
+                Confirm Password
+            </label>
+
+            <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                placeholder="Confirm your password"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="auth-button"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="auth-bottom">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Sign In
+            </a>
+
+        </div>
+
+
+        <div class="auth-bottom">
+
+            <a href="{% url 'home' %}">
+                ← Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

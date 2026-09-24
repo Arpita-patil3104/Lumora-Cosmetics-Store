@@ -1,0 +1,756 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Confirmed | LUMORA</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <style>
+
+        /* =========================================
+           ORDER CONFIRMATION PAGE
+        ========================================= */
+
+        .order-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 70px 30px 90px;
+        }
+
+
+        /* =========================================
+           SUCCESS HEADER
+        ========================================= */
+
+        .order-success {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #df3975;
+            color: white;
+
+            border-radius: 50%;
+
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .order-success-label {
+            color: #df3975;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .order-success h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 46px;
+            font-weight: 400;
+            color: #222;
+            margin: 0 0 15px;
+        }
+
+        .order-success p {
+            color: #777;
+            font-size: 15px;
+            margin: 5px 0;
+        }
+
+        .order-number {
+            color: #333 !important;
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           ORDER LAYOUT
+        ========================================= */
+
+        .order-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 45px;
+            align-items: start;
+        }
+
+
+        /* =========================================
+           ORDER ITEMS
+        ========================================= */
+
+        .order-items-card,
+        .order-info-card {
+            border: 1px solid #eee;
+            background: white;
+            padding: 30px;
+        }
+
+        .order-card-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 27px;
+            font-weight: 400;
+            color: #222;
+            margin: 0 0 25px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-image {
+            width: 80px;
+            height: 80px;
+
+            flex-shrink: 0;
+
+            background: #f8f1f4;
+            overflow: hidden;
+        }
+
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .order-item-info {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 7px;
+        }
+
+        .order-item-details {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .order-item-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #222;
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           ORDER INFORMATION
+        ========================================= */
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #888;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 600;
+            text-align: right;
+        }
+
+
+        /* =========================================
+           DELIVERY ADDRESS
+        ========================================= */
+
+        .address-box {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .address-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #df3975;
+            margin-bottom: 12px;
+        }
+
+        .address-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           PRICE SUMMARY
+        ========================================= */
+
+        .order-summary {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 14px;
+
+            font-size: 14px;
+            color: #666;
+        }
+
+        .summary-row strong {
+            color: #333;
+        }
+
+        .summary-divider {
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #222;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .summary-total strong {
+            font-size: 22px;
+        }
+
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        .order-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            background: #fdf0f5;
+            color: #df3975;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================
+           ACTION BUTTONS
+        ========================================= */
+
+        .order-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+
+            margin-top: 45px;
+        }
+
+        .order-action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 190px;
+            min-height: 50px;
+
+            padding: 0 25px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            transition: 0.25s ease;
+        }
+
+        .primary-action {
+            background: #df3975;
+            color: white;
+        }
+
+        .primary-action:hover {
+            background: #c92d65;
+        }
+
+        .secondary-action {
+            background: white;
+            color: #df3975;
+            border: 1px solid #df3975;
+        }
+
+        .secondary-action:hover {
+            background: #df3975;
+            color: white;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .order-layout {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .order-page {
+                padding: 45px 18px 60px;
+            }
+
+            .order-success h1 {
+                font-size: 36px;
+            }
+
+            .order-items-card,
+            .order-info-card {
+                padding: 22px;
+            }
+
+            .order-item-image {
+                width: 65px;
+                height: 65px;
+            }
+
+            .order-item {
+                gap: 12px;
+            }
+
+            .order-actions {
+                flex-direction: column;
+            }
+
+            .order-action-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="simple-store-header">
+
+    <a
+        href="{% url 'home' %}"
+        class="store-logo"
+    >
+        LUMORA
+    </a>
+
+
+    <div class="store-header-links">
+
+        <a href="{% url 'product_list' %}">
+            Continue Shopping
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     ORDER PAGE
+========================================= -->
+
+<main class="order-page">
+
+
+    <!-- =========================================
+         SUCCESS MESSAGE
+    ========================================== -->
+
+    <section class="order-success">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <p class="order-success-label">
+            LUMORA BEAUTY
+        </p>
+
+
+        <h1>
+            Order Confirmed
+        </h1>
+
+
+        <p>
+            Thank you for shopping with LUMORA.
+        </p>
+
+
+        <p class="order-number">
+            Order #{{ order.order_number }}
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================================
+         ORDER LAYOUT
+    ========================================== -->
+
+    <div class="order-layout">
+
+
+        <!-- =====================================
+             ORDER ITEMS
+        ====================================== -->
+
+        <section class="order-items-card">
+
+
+            <h2 class="order-card-title">
+                Your Order
+            </h2>
+
+
+            {% for item in order.items.all %}
+
+
+                <div class="order-item">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <div class="order-item-image">
+
+                        {% if item.product.image %}
+
+                            <img
+                                src="{{ item.product.image.url }}"
+                                alt="{{ item.product_name }}"
+                            >
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- PRODUCT INFO -->
+
+                    <div class="order-item-info">
+
+                        <div class="order-item-name">
+                            {{ item.product_name }}
+                        </div>
+
+
+                        <div class="order-item-details">
+                            ₹{{ item.price }} × {{ item.quantity }}
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="order-item-price">
+                        ₹{{ item.total_price }}
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             ORDER INFORMATION
+        ====================================== -->
+
+        <aside class="order-info-card">
+
+
+            <h2 class="order-card-title">
+                Order Details
+            </h2>
+
+
+
+            <!-- STATUS -->
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Status
+                </span>
+
+                <span class="order-status">
+                    {{ order.status }}
+                </span>
+
+            </div>
+
+
+
+            <!-- NAME -->
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Name
+                </span>
+
+                <span class="info-value">
+                    {{ order.full_name }}
+                </span>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Email
+                </span>
+
+                <span class="info-value">
+                    {{ order.email }}
+                </span>
+
+            </div>
+
+
+
+            <!-- PHONE -->
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Phone
+                </span>
+
+                <span class="info-value">
+                    {{ order.phone }}
+                </span>
+
+            </div>
+
+
+
+            <!-- ADDRESS -->
+
+            <div class="address-box">
+
+                <div class="address-title">
+                    DELIVERY ADDRESS
+                </div>
+
+
+                <div class="address-text">
+
+                    {{ order.address }}<br>
+
+                    {{ order.city }}<br>
+
+                    {{ order.state }} - {{ order.pincode }}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PRICE SUMMARY -->
+
+            <div class="order-summary">
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ₹{{ order.subtotal }}
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+                    <strong>
+
+                        {% if order.shipping_charge == 0 %}
+
+                            FREE
+
+                        {% else %}
+
+                            ₹{{ order.shipping_charge }}
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div class="summary-divider"></div>
+
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ₹{{ order.total_amount }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         ACTION BUTTONS
+    ========================================== -->
+
+    <div class="order-actions">
+
+
+        <a
+            href="{% url 'product_list' %}"
+            class="order-action-button primary-action"
+        >
+            CONTINUE SHOPPING
+        </a>
+
+
+        <a
+            href="{% url 'my_orders' %}"
+            class="order-action-button secondary-action"
+        >
+            MY ORDERS
+        </a>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

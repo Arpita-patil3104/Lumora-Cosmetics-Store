@@ -1,0 +1,501 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Your Bag | LUMORA</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+    <style>
+
+        /* =========================================
+           SUCCESS MESSAGE
+        ========================================= */
+
+        .cart-message {
+            max-width: 900px;
+            margin: 0 auto 30px;
+            padding: 16px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            background: #fdf0f5;
+            border: 1px solid #f3c8d8;
+
+            color: #333;
+            font-size: 14px;
+
+            box-sizing: border-box;
+        }
+
+        .cart-message-icon {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #df3975;
+            color: #fff;
+
+            border-radius: 50%;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .cart-message-text {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .cart-message-link {
+            color: #df3975;
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+
+            white-space: nowrap;
+        }
+
+        .cart-message-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           MOBILE SUCCESS MESSAGE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .cart-message {
+                flex-wrap: wrap;
+                padding: 14px 16px;
+            }
+
+            .cart-message-text {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .cart-message-link {
+                margin-left: 40px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="simple-store-header">
+
+    <a
+        href="{% url 'home' %}"
+        class="store-logo"
+    >
+        LUMORA
+    </a>
+
+
+    <div class="store-header-links">
+
+        <a href="{% url 'product_list' %}">
+            Continue Shopping
+        </a>
+
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN CART
+========================================= -->
+
+<main class="cart-page">
+
+
+    <!-- CART HEADING -->
+
+    <div class="cart-heading">
+
+        <p class="auth-label">
+            LUMORA BEAUTY
+        </p>
+
+
+        <h1>
+            Your Shopping Bag
+        </h1>
+
+
+        <p>
+            Review your products before checkout.
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================================
+         ADD TO BAG SUCCESS MESSAGE
+    ========================================== -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="cart-message">
+
+                <span class="cart-message-icon">
+                    ✓
+                </span>
+
+
+                <span class="cart-message-text">
+                    {{ message }}
+                </span>
+
+
+                <a
+                    href="{% url 'cart' %}"
+                    class="cart-message-link"
+                >
+                    VIEW BAG
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+    <!-- =========================================
+         CART HAS ITEMS
+    ========================================== -->
+
+    {% if items %}
+
+
+        <div class="cart-layout">
+
+
+            <!-- =====================================
+                 CART ITEMS
+            ====================================== -->
+
+            <section class="cart-items">
+
+
+                {% for item in items %}
+
+
+                    <div class="cart-item">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="cart-image">
+
+                            {% if item.product.image %}
+
+                                <img
+                                    src="{{ item.product.image.url }}"
+                                    alt="{{ item.product.name }}"
+                                >
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- PRODUCT INFORMATION -->
+
+                        <div class="cart-item-info">
+
+
+                            <span>
+                                {{ item.product.brand }}
+                            </span>
+
+
+                            <h2>
+                                {{ item.product.name }}
+                            </h2>
+
+
+                            <p>
+                                ₹{{ item.product.final_price }}
+                            </p>
+
+
+
+                            <!-- QUANTITY -->
+
+                            <form
+                                method="POST"
+                                action="{% url 'update_cart' item.id %}"
+                                class="quantity-form"
+                            >
+
+                                {% csrf_token %}
+
+
+                                <label>
+                                    Quantity
+                                </label>
+
+
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    value="{{ item.quantity }}"
+                                    min="1"
+                                    max="{{ item.product.stock }}"
+                                >
+
+
+                                <button type="submit">
+                                    Update
+                                </button>
+
+
+                            </form>
+
+
+
+                            <!-- REMOVE -->
+
+                            <a
+                                href="{% url 'remove_from_cart' item.id %}"
+                                class="remove-cart"
+                            >
+                                Remove
+                            </a>
+
+
+                        </div>
+
+
+
+                        <!-- ITEM TOTAL -->
+
+                        <div class="cart-item-total">
+
+                            ₹{{ item.total_price }}
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </section>
+
+
+
+            <!-- =====================================
+                 ORDER SUMMARY
+            ====================================== -->
+
+            <aside class="cart-summary">
+
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+
+                <!-- SUBTOTAL -->
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+
+                    <strong>
+                        ₹{{ subtotal }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- SHIPPING -->
+
+                <div class="summary-row">
+
+                    <span>
+                        Shipping
+                    </span>
+
+
+                    <strong>
+
+                        {% if shipping == 0 %}
+
+                            FREE
+
+                        {% else %}
+
+                            ₹{{ shipping }}
+
+                        {% endif %}
+
+                    </strong>
+
+                </div>
+
+
+
+                <!-- DIVIDER -->
+
+                <div class="summary-divider"></div>
+
+
+
+                <!-- TOTAL -->
+
+                <div class="summary-total">
+
+                    <span>
+                        Total
+                    </span>
+
+
+                    <strong>
+                        ₹{{ total }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- CHECKOUT -->
+
+            <a
+                href="{% url 'checkout' %}"
+                class="checkout-button"
+>
+                 PROCEED TO CHECKOUT
+            </a>
+
+
+
+                <!-- FREE SHIPPING MESSAGE -->
+
+                <p class="free-shipping">
+
+
+                    {% if shipping == 0 %}
+
+                        🎉 You unlocked free shipping!
+
+
+                    {% else %}
+
+                        Add ₹{{ 499|add:subtotal|floatformat:2 }}
+                        for free shipping.
+
+                    {% endif %}
+
+
+                </p>
+
+
+            </aside>
+
+
+        </div>
+
+
+
+    <!-- =========================================
+         EMPTY CART
+    ========================================== -->
+
+    {% else %}
+
+
+        <div class="empty-cart">
+
+
+            <div class="empty-cart-icon">
+                🛍️
+            </div>
+
+
+            <h2>
+                Your bag is empty
+            </h2>
+
+
+            <p>
+                Discover something beautiful for yourself.
+            </p>
+
+
+            <a
+                href="{% url 'product_list' %}"
+                class="continue-shopping"
+            >
+                Shop Now
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+</body>
+
+</html>
